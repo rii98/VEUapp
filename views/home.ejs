@@ -1,0 +1,66 @@
+<%- include("header") -%>
+    <% posts.forEach(post =>{ %>
+
+        <div class="card m-auto mt-5 col-md-7 col-lg-5">
+
+            <!-- card-body -->
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-auto">
+                        <img src="https://yt3.ggpht.com/k1t37AgfuS1IscfxNaBWnSq1JjHo4k9EQxrn8OIDwCXEuuyh3Y_RKhj2Jc5EHJDlajgJJrWskw=s88-c-k-c0x00ffffff-no-rj" style="height: 40px;width: 40px;border-radius: 50%;"">
+                    </div>
+                    <div class="col ps-0">
+                        <strong>RiyajB</strong>
+                        <em class="text-body-tertiary" style="font-size: 0.8rem;">@riyaj_b1</em>
+                        <small class="d-block text-muted"> <%= post.publishedTime %></small>
+                        <p class="card-text mt-2">
+                            <%= post.postbody %>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- card-footer -->
+
+            <div class="card-footer">
+                <button class="btn">
+                 <i class="fa-regular fa-heart d-none" ></i>
+                 <i class="fa-solid fa-heart text-danger"></i>
+               </button>
+
+
+                <!-- comment section -->
+
+                <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target=<%="#" +post.id%> aria-expanded="false" aria-controls="collapseExample">
+                    <i class="fa-regular fa-comment"></i>
+                </button>
+
+
+                <div class="collapse" id=<%=post.id%> style = "max-height: 250px;overflow: scroll;">
+                    <div class="card mt-2">
+                        <div class="card-header fw-bold">
+                            Comments
+                        </div>
+                        <div class="card-body pb-0">
+                            <!-- code for looping in posted comment -->
+
+                            <% post.comments.get(Number(post.id)).forEach(comment =>{%>
+                                <p>
+                                    <%= comment %>
+                                </p>
+                                <%})%>
+
+                                    <form class="d-flex align-items-start" method="post" action="/comment">
+                                        <textarea placeholder="Add comment" class="form-control me-2" rows="2" style="resize: none;" name="comment"> </textarea>
+                                        <input class="d-none" name="id" value="<%= post.id %>">
+                                        <button class="btn btn-outline-success"><i class="fa-solid fa-arrow-right"></i></button>
+                                    </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <%}) %>
+            <%- include("footer") -%>
